@@ -19,8 +19,8 @@ public class GenericStreamClient: StreamBaseClient {
     }
     
     public func setAuth(user: String, password: String) {
-        rtmpClient.setAuth(user: user, password: password)
-        rtspClient.setAuth(user: user, password: password)
+      rtmpClient.setAuth(user: user, password: password)
+      rtspClient.setAuth(user: user, password: password)
     }
     
     public func setOnlyAudio(onlyAudio: Bool) {

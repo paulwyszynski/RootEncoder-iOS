@@ -6,10 +6,10 @@ public class RtspSender: BaseSender {
     private var videoPacketizer: RtspBasePacket?
     private var rtpSocket: BaseRtpSocket?
     private var senderReport: BaseSenderReport?
-    private let commandsManager: RtspCommandManager
+//    private let commandsManager: RtspCommandManager
     
-    public init(callback: ConnectChecker, commandsManager: RtspCommandManager) {
-        self.commandsManager = commandsManager
+    public init(callback: ConnectChecker) {
+//        self.commandsManager = commandsManager
         super.init(callback: callback, tag: "RtspSender")
     }
 
@@ -31,21 +31,21 @@ public class RtspSender: BaseSender {
     }
 
     public override func setVideoInfo(sps: Array<UInt8>, pps: Array<UInt8>, vps: Array<UInt8>?) {
-        videoPacketizer = switch commandsManager.videoCodec {
-        case VideoCodec.H264:
-            RtspH264Packet(sps: sps, pps: pps)
-        case VideoCodec.H265:
-            RtspH265Packet()
-        }
+//        videoPacketizer = switch commandsManager.videoCodec {
+//        case VideoCodec.H264:
+            videoPacketizer = RtspH264Packet(sps: sps, pps: pps)
+//        case VideoCodec.H265:
+//            RtspH265Packet()
+//        }
     }
     
     public override func setAudioInfo(sampleRate: Int, isStereo: Bool) {
-        audioPacketizer = switch commandsManager.audioCodec {
-        case AudioCodec.AAC:
-            RtspAacPacket(sampleRate: sampleRate)
-        case AudioCodec.G711:
-            RtspG711Packet(sampleRate: sampleRate)
-        }
+//        audioPacketizer = switch commandsManager.audioCodec {
+//        case AudioCodec.AAC:
+              audioPacketizer = RtspAacPacket(sampleRate: sampleRate)
+//        case AudioCodec.G711:
+//            RtspG711Packet(sampleRate: sampleRate)
+//        }
     }
 
     public override func onRun() {
