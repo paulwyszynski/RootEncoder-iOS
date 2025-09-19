@@ -4,7 +4,7 @@ public class RtspCommandManager {
     private var host: String?
     private var port: Int?
     private var path: String?
-    var mProtocol: Protocol = .TCP
+    var mProtocol: Protocol = .UDP
     private var cSeq = 0
     private var sessionId: String? = nil
     private var authorization: String? = nil
