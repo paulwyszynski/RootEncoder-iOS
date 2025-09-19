@@ -77,14 +77,14 @@ public class RtspSender: BaseSender {
                             let reportSize = isTcp ? RtpConstants.REPORT_PACKET_LENGTH + 4 : RtpConstants.REPORT_PACKET_LENGTH
                             self.bitrateManager.calculateBitrate(size: Int64(reportSize) * 8)
                             if isEnableLogs {
-                                print("wrote report")
+//                                print("wrote report")
                             }
                         }
                     }
                     self.rtpSocket?.flush()
                     if isEnableLogs {
                         let type = if isVideo { "Video" } else { "Audio" }
-                        print("wrote \(type) packet, size \(size)")
+//                        print("wrote \(type) packet, size \(size)")
                     }
                 } catch let error {
                     self.callback.onConnectionFailed(reason: error.localizedDescription)
