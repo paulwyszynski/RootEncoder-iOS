@@ -3,7 +3,7 @@ import Foundation
 public class RtspClient: SocketCallback {
   
   private let validSchemes = ["rtp"]
-  private var socket: Socket?
+//  private var socket: Socket?
   private let connectChecker: ConnectChecker
   private var streaming = false
   private let commandsManager = RtspCommandManager()
@@ -98,8 +98,8 @@ public class RtspClient: SocketCallback {
           }
           
           self.commandsManager.setUrl(host: host, port: port, path: "/\(path)")
-          self.socket = Socket(tlsEnabled: self.tlsEnabled, host: host, port: port, callback: self)
-          try self.socket?.connect()
+//          self.socket = Socket(tlsEnabled: self.tlsEnabled, host: host, port: port, callback: self)
+//          try self.socket?.connect()
           if (!self.commandsManager.audioDisabled) {
             self.rtspSender.setAudioInfo(sampleRate: self.commandsManager.getSampleRate(), isStereo: self.commandsManager.isStereo)
           }
@@ -154,8 +154,8 @@ public class RtspClient: SocketCallback {
             //                      }
             if !self.commandsManager.videoDisabled {
               //Setup video
-              try self.socket?.write(data: self.commandsManager.createSetup(track: self.commandsManager.getVideoTrack()))
-              socket?.flush()
+//              try self.socket?.write(data: self.commandsManager.createSetup(track: self.commandsManager.getVideoTrack()))
+//              socket?.flush()
               //                        let setupVideoStatus = try self.commandsManager.getResponse(socket: self.socket!, method: Method.SETUP).status
               //                        if (setupVideoStatus != 200) {
               //                            self.connectChecker.onConnectionFailed(reason: "Error configure stream, setup video \(setupVideoStatus)")
@@ -164,8 +164,8 @@ public class RtspClient: SocketCallback {
             }
             if !self.commandsManager.audioDisabled {
               //                        //Setup audio
-              try self.socket?.write(data: self.commandsManager.createSetup(track: self.commandsManager.getAudioTrack()))
-              socket?.flush()
+//              try self.socket?.write(data: self.commandsManager.createSetup(track: self.commandsManager.getAudioTrack()))
+//              socket?.flush()
               //                        let setupAudioStatus = try self.commandsManager.getResponse(socket: self.socket!, method: Method.SETUP).status
               //                        if (setupAudioStatus != 200) {
               //                            self.connectChecker.onConnectionFailed(reason: "Error configure stream, setup audio \(setupAudioStatus)")
@@ -181,9 +181,10 @@ public class RtspClient: SocketCallback {
             //                        return
             //                    }
             
-            self.rtspSender.setSocketInfo(mProtocol: self.commandsManager.mProtocol, socket: self.socket!,
-                                          videoClientPorts: self.commandsManager.videoClientPorts, audioClientPorts: self.commandsManager.audioClientPorts,
-                                          videoServerPorts: self.commandsManager.videoServerPorts, audioServerPorts: self.commandsManager.audioServerPorts)
+//            self.rtspSender.setSocketInfo(mProtocol: self.commandsManager.mProtocol, socket: self.socket!,
+//                                          videoClientPorts: self.commandsManager.videoClientPorts, audioClientPorts: self.commandsManager.audioClientPorts,
+//                                          videoServerPorts: self.commandsManager.videoServerPorts, audioServerPorts: self.commandsManager.audioServerPorts)
+            self.rtspSender.setSocketInfo(mProtocol: self.commandsManager.mProtocol, host: host, videoClientPorts: self.commandsManager.videoClientPorts, audioClientPorts: self.commandsManager.audioClientPorts, videoServerPorts: self.commandsManager.videoServerPorts, audioServerPorts: self.commandsManager.audioServerPorts)
             self.rtspSender.start()
             self.connectChecker.onConnectionSuccess()
             
@@ -238,7 +239,7 @@ public class RtspClient: SocketCallback {
     //        }
 //    let _ = sync.wait(timeout: DispatchTime.now() + 0.1)
 //    task.cancel()
-    socket?.disconnect()
+//    socket?.disconnect()
     if (clear) {
       //            commandsManager.clear()
       reTries = numRetry

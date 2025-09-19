@@ -12,22 +12,32 @@ public class RtspSender: BaseSender {
 //        self.commandsManager = commandsManager
         super.init(callback: callback, tag: "RtspSender")
     }
+  
+  public func setSocketInfo(mProtocol: Protocol, host: String, videoClientPorts: Array<Int>, audioClientPorts: Array<Int>, videoServerPorts: Array<Int>, audioServerPorts: Array<Int>) {
+    
+    let videoReportPorts = Array<Int>(arrayLiteral: videoClientPorts[1], videoServerPorts[1])
+    let audioReportPorts = Array<Int>(arrayLiteral: audioClientPorts[1], audioServerPorts[1])
+    let videoSocketPorts = Array<Int>(arrayLiteral: videoClientPorts[0], videoServerPorts[0])
+    let audioSocketPorts = Array<Int>(arrayLiteral: audioClientPorts[0], audioServerPorts[0])
+    rtpSocket = RtpSocketUdp(callback: callback, host: host, videoPorts: videoSocketPorts, audioPorts: audioSocketPorts)
+    senderReport = SenderReportUdp(callback: callback, host: host, videoPorts: videoReportPorts, audioPorts: audioReportPorts)
+  }
 
     public func setSocketInfo(mProtocol: Protocol, socket: Socket, videoClientPorts: Array<Int>, audioClientPorts: Array<Int>, videoServerPorts: Array<Int>, audioServerPorts: Array<Int>) {
-        switch (mProtocol) {
-        case .TCP:
-            rtpSocket = RtpSocketTcp(socket: socket)
-            senderReport = SenderReportTcp(socket: socket)
-            break
-        case .UDP:
+//        switch (mProtocol) {
+//        case .TCP:
+//            rtpSocket = RtpSocketTcp(socket: socket)
+//            senderReport = SenderReportTcp(socket: socket)
+//            break
+//        case .UDP:
             let videoReportPorts = Array<Int>(arrayLiteral: videoClientPorts[1], videoServerPorts[1])
             let audioReportPorts = Array<Int>(arrayLiteral: audioClientPorts[1], audioServerPorts[1])
             let videoSocketPorts = Array<Int>(arrayLiteral: videoClientPorts[0], videoServerPorts[0])
             let audioSocketPorts = Array<Int>(arrayLiteral: audioClientPorts[0], audioServerPorts[0])
             rtpSocket = RtpSocketUdp(callback: callback, host: socket.host, videoPorts: videoSocketPorts, audioPorts: audioSocketPorts)
             senderReport = SenderReportUdp(callback: callback, host: socket.host, videoPorts: videoReportPorts, audioPorts: audioReportPorts)
-            break
-        }
+//            break
+//        }
     }
 
     public override func setVideoInfo(sps: Array<UInt8>, pps: Array<UInt8>, vps: Array<UInt8>?) {
