@@ -2,7 +2,7 @@ import Foundation
 
 public class RtspClient: SocketCallback {
   
-  private let validSchemes = ["rtsp", "rtsps"]
+  private let validSchemes = ["rtp"]
   private var socket: Socket?
   private let connectChecker: ConnectChecker
   private var streaming = false
