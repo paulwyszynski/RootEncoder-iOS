@@ -80,6 +80,7 @@ public class RtspClient: SocketCallback {
           return
         }
         self.url = url
+        print("Connecting to \(url)")
         do {
           let urlParser = try UrlParser.parse(endpoint: url, requiredProtocols: self.validSchemes)
           tlsEnabled = urlParser.scheme.hasSuffix("s")
@@ -194,6 +195,10 @@ public class RtspClient: SocketCallback {
             //                    self.connectChecker.onConnectionFailed(reason: error.localizedDescription)
             //                    return
           }
+        }
+        catch {
+          print("Url scheme not supported: \(error.localizedDescription)")
+          print("Url: \(url)")
         }
       }
     }

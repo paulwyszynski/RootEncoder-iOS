@@ -181,20 +181,20 @@ public class RtspCommandManager {
         self.vps = vps
     }
     
-    public func getResponse(socket: Socket, method: Method = Method.UNKNOWN) throws -> RtspCommand {
-        let response = try socket.readString()
-        print(response)
-        if (method == Method.UNKNOWN) {
-            return commandParser.parseCommand(commandText: response)
-        } else {
-            let command = commandParser.parseResponse(method: method, responseText: response)
-            sessionId = commandParser.getSessionId(command: command)
-            if (command.method == Method.SETUP && mProtocol == Protocol.UDP) {
-                _ = commandParser.loadServerPorts(command: command, protocol: mProtocol, audioClientPorts: audioClientPorts, videoClientPorts: videoClientPorts, audioServerPorts: &audioServerPorts, videoServerPorts: &videoServerPorts)
-            }
-            return command
-        }
-    }
+//    public func getResponse(socket: Socket, method: Method = Method.UNKNOWN) throws -> RtspCommand {
+//        let response = try socket.readString()
+//        print(response)
+//        if (method == Method.UNKNOWN) {
+//            return commandParser.parseCommand(commandText: response)
+//        } else {
+//            let command = commandParser.parseResponse(method: method, responseText: response)
+//            sessionId = commandParser.getSessionId(command: command)
+//            if (command.method == Method.SETUP && mProtocol == Protocol.UDP) {
+//                _ = commandParser.loadServerPorts(command: command, protocol: mProtocol, audioClientPorts: audioClientPorts, videoClientPorts: videoClientPorts, audioServerPorts: &audioServerPorts, videoServerPorts: &videoServerPorts)
+//            }
+//            return command
+//        }
+//    }
     
     public func clear() {
       sps = nil
